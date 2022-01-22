@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS anotacoes(
+CREATE TABLE IF NOT EXISTS annotations(
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-   descricao VARCHAR(255) NOT NULL,
-   valor DOUBLE NOT NULL,
-   data DATE NOT NULL,
-   tipo VARCHAR(8) NOT NULL
+   description VARCHAR(255) NOT NULL,
+   value DOUBLE NOT NULL,
+   date DATE NOT NULL,
+   type VARCHAR(8) NOT NULL
 );
