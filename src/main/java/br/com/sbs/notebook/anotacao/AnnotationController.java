@@ -19,7 +19,7 @@ public class AnnotationController {
     }
 
     @GetMapping("/{tipo}")
-    public ResponseEntity<List<Annotation>> findByAnnotationType(@PathVariable String tipo) {
+    public ResponseEntity<List<AnnotationDTO>> findByAnnotationType(@PathVariable String tipo) {
         AnnotationType type = null;
         if ("receitas".equals(tipo)){
             type = AnnotationType.INCOME;
@@ -28,7 +28,7 @@ public class AnnotationController {
             type = AnnotationType.EXPENSE;
         }
         List<Annotation> annotations = anotacaoServie.findByTipo(type);
-        return ResponseEntity.ok().body(annotations);
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
     }
 
     @PostMapping

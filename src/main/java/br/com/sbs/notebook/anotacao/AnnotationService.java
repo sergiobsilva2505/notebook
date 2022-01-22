@@ -8,8 +8,7 @@ import java.util.List;
 @Service
 public class AnnotationService {
 
-    @Autowired
-    private AnnotationRepository annotationRepository;
+    private final AnnotationRepository annotationRepository;
 
     public AnnotationService(AnnotationRepository annotationRepository) {
         this.annotationRepository = annotationRepository;
