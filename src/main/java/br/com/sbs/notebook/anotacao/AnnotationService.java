@@ -44,4 +44,8 @@ public class AnnotationService {
         }
         return false;
     }
+
+    public Optional<Annotation> findById(Long id) {
+        return annotationRepository.findById(id);
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -33,15 +34,10 @@ public class AnnotationController {
     }
 
     @GetMapping("/receitas/{id}")
-    public ResponseEntity<List<AnnotationDTO>> findIncomeById( Long id) {
-        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.INCOME);
-        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
-    }
-
-    @GetMapping("/despesas")
-    public ResponseEntity<List<AnnotationDTO>> findAllExpenses() {
-        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.EXPENSE);
-        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
+    public ResponseEntity<AnnotationDTO> findIncomeById(@PathVariable Long id) {
+        Annotation annotation = annotationsService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Objeto não encontrado"));
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotation));
     }
 
     @PostMapping("/receitas")
@@ -52,4 +48,12 @@ public class AnnotationController {
         URI uri = URI.create(format("receitas/%s", annotation.getId() ));
         return ResponseEntity.created(uri).build();
     }
+
+    @GetMapping("/despesas")
+    public ResponseEntity<List<AnnotationDTO>> findAllExpenses() {
+        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.EXPENSE);
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
+    }
+
+
 }

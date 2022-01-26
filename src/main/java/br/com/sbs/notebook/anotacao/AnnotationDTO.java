@@ -22,6 +22,10 @@ public class AnnotationDTO {
         return annotations.stream().map(AnnotationDTO::new).toList();
     }
 
+    public AnnotationDTO fromEntity(Annotation annotation){
+        return new AnnotationDTO(annotation);
+    }
+
     public String getDescription() {
         return description;
     }
