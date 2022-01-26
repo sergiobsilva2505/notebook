@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnnotationService {
@@ -23,13 +24,16 @@ public class AnnotationService {
     }
 
     public Annotation save(Annotation novaAnnotation) {
-        List<Annotation> anotacoes = annotationRepository.findAll();
-        boolean hasAlready = hasTheSameAnotion(novaAnnotation, anotacoes);
-        if (hasAlready) {
-            throw new IllegalArgumentException("Já tem");
+        boolean exists = annotationRepository.exists(novaAnnotation);
+        if (exists) {
+            throw new RuntimeException("Já existe");
         }
         Annotation annotation = annotationRepository.save(novaAnnotation);
         return annotation;
+    }
+
+    public Optional<Annotation> findIncomeById(Long id){
+        return annotationRepository.findAnnotationById(id);
     }
 
     private boolean hasTheSameAnotion(Annotation novaAnnotation, List<Annotation> anotacoes) {

@@ -9,35 +9,47 @@ import java.util.List;
 import static java.lang.String.format;
 
 @RestController
-@RequestMapping("/notebook")
+@RequestMapping
 public class AnnotationController {
 
-    private final AnnotationService anotacaoServie;
+    private final AnnotationService annotationsService;
+    private final AnnotationRepository annotationsRepository;
 
-    public AnnotationController(AnnotationService anotacaoServie) {
-        this.anotacaoServie = anotacaoServie;
+    public AnnotationController(AnnotationService annotationsService, AnnotationRepository annotationsRepository) {
+        this.annotationsService = annotationsService;
+        this.annotationsRepository = annotationsRepository;
     }
 
-    @GetMapping("/{tipo}")
-    public ResponseEntity<List<AnnotationDTO>> findByAnnotationType(@PathVariable String tipo) {
-        AnnotationType type = null;
-        if ("receitas".equals(tipo)){
-            type = AnnotationType.INCOME;
-        }
-        if ("despesas".equals(tipo)){
-            type = AnnotationType.EXPENSE;
-        }
-        List<Annotation> annotations = anotacaoServie.findByTipo(type);
+    @GetMapping("/all")
+    public ResponseEntity<List<AnnotationDTO>> findAllAnnotations() {
+        List<Annotation> annotations = annotationsService.findAll();
         return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
     }
 
-    @PostMapping
+    @GetMapping("/receitas")
+    public ResponseEntity<List<AnnotationDTO>> findAllIncomes() {
+        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.INCOME);
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
+    }
+
+    @GetMapping("/receitas/{id}")
+    public ResponseEntity<List<AnnotationDTO>> findIncomeById( Long id) {
+        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.INCOME);
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
+    }
+
+    @GetMapping("/despesas")
+    public ResponseEntity<List<AnnotationDTO>> findAllExpenses() {
+        List<Annotation> annotations = annotationsService.findByTipo(AnnotationType.EXPENSE);
+        return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotations));
+    }
+
+    @PostMapping("/receitas")
     public ResponseEntity<Void> save (@RequestBody NewAnnotationForm anotacaoForm) {
         Annotation annotation = anotacaoForm.toEntity();
-        anotacaoServie.save(annotation);
+        annotation.setAnnotationType(AnnotationType.INCOME);
+        annotationsService.save(annotation);
         URI uri = URI.create(format("receitas/%s", annotation.getId() ));
         return ResponseEntity.created(uri).build();
     }
-
-
 }

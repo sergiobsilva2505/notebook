@@ -15,7 +15,7 @@ public class AnnotationDTO {
     public AnnotationDTO(Annotation annotation) {
         this.description = annotation.getDescription();
         this.value = annotation.getValue();
-        this.date = annotation.getDate();
+        this.date = annotation.getCreatedAt();
     }
 
     public List<AnnotationDTO> fromEntity(List<Annotation> annotations){

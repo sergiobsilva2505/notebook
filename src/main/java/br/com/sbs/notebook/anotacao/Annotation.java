@@ -13,7 +13,7 @@ public class Annotation {
     private Long id;
     private String description;
     private Double value;
-    private LocalDate date;
+    private LocalDate createdAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
@@ -23,11 +23,10 @@ public class Annotation {
     public Annotation() {
     }
 
-    public Annotation(String description, Double value, LocalDate date, AnnotationType annotationType) {
+    public Annotation(String description, Double value, LocalDate createdAt) {
         this.description = description;
         this.value = value;
-        this.date = date;
-        this.annotationType = annotationType;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -42,12 +41,16 @@ public class Annotation {
         return value;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
     public AnnotationType getAnnotationType() {
         return annotationType;
+    }
+
+    public void setAnnotationType(AnnotationType annotationType) {
+        this.annotationType = annotationType;
     }
 
     @Override
@@ -55,11 +58,11 @@ public class Annotation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Annotation annotation = (Annotation) o;
-        return Objects.equals(id, annotation.id) && Objects.equals(description, annotation.description) && Objects.equals(date, annotation.date) && annotationType == annotation.annotationType;
+        return Objects.equals(id, annotation.id) && Objects.equals(description, annotation.description) && Objects.equals(createdAt, annotation.createdAt) && annotationType == annotation.annotationType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, date, annotationType);
+        return Objects.hash(id, description, createdAt, annotationType);
     }
 }

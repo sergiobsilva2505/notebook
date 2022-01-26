@@ -2,6 +2,6 @@ CREATE TABLE IF NOT EXISTS annotations(
    id BIGINT PRIMARY KEY AUTO_INCREMENT,
    description VARCHAR(255) NOT NULL,
    value DOUBLE NOT NULL,
-   date DATE NOT NULL,
-   type VARCHAR(8) NOT NULL
+   created_at DATE NOT NULL,
+   type VARCHAR(255) NOT NULL
 );
