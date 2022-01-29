@@ -14,11 +14,9 @@ import static java.lang.String.format;
 public class AnnotationController {
 
     private final AnnotationService annotationsService;
-    private final AnnotationRepository annotationsRepository;
 
-    public AnnotationController(AnnotationService annotationsService, AnnotationRepository annotationsRepository) {
+    public AnnotationController(AnnotationService annotationsService) {
         this.annotationsService = annotationsService;
-        this.annotationsRepository = annotationsRepository;
     }
 
     @GetMapping("/all")
@@ -35,19 +33,37 @@ public class AnnotationController {
 
     @GetMapping("/receitas/{id}")
     public ResponseEntity<AnnotationDTO> findIncomeById(@PathVariable Long id) {
-        Annotation annotation = annotationsService.findById(id)
+        Annotation annotation = annotationsService.findIncomeById(id)
                 .orElseThrow(() -> new RuntimeException("Objeto não encontrado"));
         return ResponseEntity.ok().body(new AnnotationDTO().fromEntity(annotation));
     }
 
     @PostMapping("/receitas")
-    public ResponseEntity<Void> save (@RequestBody NewAnnotationForm anotacaoForm) {
+    public ResponseEntity<Void> save(@RequestBody NewAnnotationForm anotacaoForm) {
         Annotation annotation = anotacaoForm.toEntity();
         annotation.setAnnotationType(AnnotationType.INCOME);
         annotationsService.save(annotation);
         URI uri = URI.create(format("receitas/%s", annotation.getId() ));
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping("/receitas/{id}")
+    public ResponseEntity<AnnotationDTO> update(@RequestBody NewAnnotationForm newAnnotationForm, @PathVariable Long id) {
+        Annotation incomeById = annotationsService.findIncomeById(id)
+                .orElseThrow(()-> new RuntimeException("Não encontrado"));
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/despesas")
     public ResponseEntity<List<AnnotationDTO>> findAllExpenses() {

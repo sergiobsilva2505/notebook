@@ -1,6 +1,7 @@
 package br.com.sbs.notebook.anotacao;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public class Annotation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private Double value;
+    private BigDecimal value;
     private LocalDate createdAt;
 
     @Enumerated(EnumType.STRING)
@@ -23,7 +24,7 @@ public class Annotation {
     public Annotation() {
     }
 
-    public Annotation(String description, Double value, LocalDate createdAt) {
+    public Annotation(String description, BigDecimal value, LocalDate createdAt) {
         this.description = description;
         this.value = value;
         this.createdAt = createdAt;
@@ -37,7 +38,7 @@ public class Annotation {
         return description;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 

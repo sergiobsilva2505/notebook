@@ -1,12 +1,13 @@
 package br.com.sbs.notebook.anotacao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 public class AnnotationDTO {
 
     private String description;
-    private Double value;
+    private BigDecimal value;
     private LocalDate date;
 
     public AnnotationDTO() {
@@ -30,7 +31,7 @@ public class AnnotationDTO {
         return description;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 

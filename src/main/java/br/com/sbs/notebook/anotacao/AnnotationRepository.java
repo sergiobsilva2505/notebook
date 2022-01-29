@@ -33,4 +33,6 @@ public interface AnnotationRepository extends JpaRepository<Annotation, Long> {
     default boolean exists(Annotation annotation) {
         return exists(annotation.getDescription(), annotation.getAnnotationType().toString(), annotation.getCreatedAt().getMonthValue(), annotation.getCreatedAt().getYear());
     }
+
+    Optional<Annotation> findByIdAndAnnotationType(Long id, AnnotationType annotationType);
 }

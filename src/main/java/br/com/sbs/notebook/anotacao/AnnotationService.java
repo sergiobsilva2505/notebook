@@ -33,7 +33,7 @@ public class AnnotationService {
     }
 
     public Optional<Annotation> findIncomeById(Long id){
-        return annotationRepository.findAnnotationById(id);
+        return annotationRepository.findByIdAndAnnotationType(id, AnnotationType.INCOME);
     }
 
     private boolean hasTheSameAnotion(Annotation novaAnnotation, List<Annotation> anotacoes) {
